@@ -44,7 +44,7 @@ for i in `ls CSV`;do
 				if (( ${#sc}>0 ));then
 					grade=`echo $sc | cut -d "(" -f 2 | cut -d ")" -f 1`
 					#grade+='/'
-					if [[ ${grade} != FE ]];then
+					if [[ ${grade} != FE || ${grade} != I ]];then
 						(( g++ ))
 					fi
 				fi
