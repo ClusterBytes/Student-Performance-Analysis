@@ -1,4 +1,4 @@
-cd ../Dataset
+cd ../../Dataset
 echo 'Reg_No,Semester,Year,Dept,Subject,Attendance,Internal mark,Grade' > CSV-Single/1.csv
 c=0
 for i in `ls CSV`;do
@@ -29,7 +29,7 @@ for i in `ls CSV`;do
 			fi
 			
 			if (( scheme==15 ));then
-				if (( $(echo "$int >= 45" |bc -l) ));then
+				if (( $(echo "$int >= 45" | bc -l) ));then
 					eligible=1
 				fi
 			else 
@@ -39,12 +39,14 @@ for i in `ls CSV`;do
 		
 		if (( eligible==1 ));then
 			g=0
-			for k in `grep $reg CSV-Finals/${year}_${sem}.csv`;do
+			for k in `grep $reg CSV-Finals/*`;do
 				sc=`echo $k | grep ${sub}\([^,]*\) -o`
 				if (( ${#sc}>0 ));then
 					grade=`echo $sc | cut -d "(" -f 2 | cut -d ")" -f 1`
 					#grade+='/'
-					(( g++ ))
+					if [[ ${grade} != FE ]];then
+						(( g++ ))
+					fi
 				fi
 			done
 			if (( g>1 ));then
