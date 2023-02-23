@@ -7,7 +7,12 @@ def sklearn_to_df(data_loader):
     X_data = data_loader.data
     X_columns = data_loader.feature_names
     x = pd.DataFrame(X_data, columns=X_columns)
-    print(x)
+    y_data = data_loader.target
+    y = pd.Series(y_data, name="target")
+    print(len(y_data))
+
+    return x, y
 
 
-sklearn_to_df(load_breast_cancer())
+x, y = sklearn_to_df(load_breast_cancer())
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
