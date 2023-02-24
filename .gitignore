@@ -1,1 +1,3 @@
 venv
+*.csv 
+sklearn_exploring
