@@ -11,6 +11,5 @@ for col in merging_columns:
     grouped_df = pd.DataFrame(grouped.values.tolist(), index=grouped.index).add_prefix(col[0:3])
     final.append(grouped_df)
     print(grouped_df)
-
 df_final = ft.reduce(lambda left, right: pd.merge(left, right, on="Reg_No"), final)
 df_final.to_csv("final.csv", index=True)
