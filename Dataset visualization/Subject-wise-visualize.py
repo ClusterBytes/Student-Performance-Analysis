@@ -11,7 +11,7 @@ col=['reg','sem','year','branch','sub','attendance','internals','grade']
 
 
 for f in os.listdir(dir):
-    print('file',f)
+    #print('file',f)
     data=pd.read_csv(dir+'/'+f,header=None,names=col)
     
     OE_grade=OrdinalEncoder(categories=[['F','P','C','B','B+','A','A+','S']])
@@ -25,17 +25,22 @@ for f in os.listdir(dir):
     count=data_tr.groupby(['grade'],observed=True).count()
     count.columns=['count']
 
-    X=count['count'].index
-    y=count['count'].values
-    fig, axs = plt.subplots(1,2, figsize=(9, 3))
+    X=np.array([x for x in range(8)])
+    y=[]
+    for x in X:
+        try:
+            y.append(count['count'][x])
+        except KeyError:
+            y.append(0)
+    y=np.array(y)
+    
+    fig,axs = plt.subplots(1,2, figsize=(9, 3))     
     axs[0].bar(X,y)
     axs[1].plot(X,y)
     fig.suptitle(f)
-    
     plt.show()
     
-    print(count)
-    print(type(X),X)
-    print(type(y),y)
-    
+    # print(count)
+    # print(type(X),X)
+    # print(type(y),y)
     
