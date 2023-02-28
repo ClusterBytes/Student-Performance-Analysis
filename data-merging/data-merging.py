@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import functools as ft
+from year_dept_merge import year_dept_merge
 
 df = pd.read_csv("1.csv")
 
@@ -14,6 +15,7 @@ for col in merging_columns:
     grouped_df.columns = new_cols
     final.append(grouped_df)
     print(grouped_df)
-
+year_dept = year_dept_merge(df)
+print(year_dept)
 df_final = ft.reduce(lambda left, right: pd.merge(left, right, on="Reg_No"), final)
 df_final.to_csv("final.csv", index=True)
