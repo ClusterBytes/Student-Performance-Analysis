@@ -1,22 +1,13 @@
 from pandas import *
 
-# def year_dept_merge(data):    
-# reading CSV file
 
+def year_dept_merge(df):
 
-data = read_csv("1.csv")
-df = DataFrame(data)
+    df = df.loc[:, ["Reg_No", "Dept"]]
 
-column_to_compare = 'Reg_No'
+    df = df.drop_duplicates()
 
-df = df.loc[:, ['Reg_No', 'Year', 'Dept']]
+    df_filtered = df[(df["Reg_No"] != "KSD17ME045") | (df["Dept"] != "IT")]
 
-df = df.drop_duplicates()
-
-duplicates = df[df.duplicated(subset=column_to_compare, keep=False)]
-
-
-df.to_csv("Grouped.csv",index=False)
-# return df
-
-
+    # df_filtered.to_csv("Grouped.csv", index=False)
+    return df_filtered
