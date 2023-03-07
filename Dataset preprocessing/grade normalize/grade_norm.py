@@ -43,7 +43,9 @@ for _year in year:
                     a1=y[g]-b1
                     a2=y[g]-b2
                     
-                    perc[Grade]=b1 if (b1-a1)-(y[g+1]-y[g-1])<(b2-a2)-(y[g+1]-y[g-1]) else b2
+                    perc[Grade]=a1 if (b1-a1)-(y[g+1]-y[g-1])<(b2-a2)-(y[g+1]-y[g-1]) else a2
+                    if perc[Grade]<0:
+                        perc[Grade]=0
                 perc['P']=y[1]
                 
                 
@@ -54,10 +56,10 @@ for _year in year:
                 for g in range(1,5):
                     Grade=grade[g]
                     slice_index=int(perc[Grade])
-                    print(Grade,perc[Grade])
+                    #print(Grade,perc[Grade])
                     c_indices=data.loc[data['grade']==Grade].index[:slice_index]
-                    data.loc[c_indices,'grade']=new_grade[Grade][0]
-                    data.loc[data['grade']==Grade,'grade']=new_grade[Grade][1]
+                    data.loc[c_indices,'grade']=new_grade[Grade][1]
+                    data.loc[data['grade']==Grade,'grade']=new_grade[Grade][0]
                     
                 data.to_csv(dir+'/'+'norm_'+f+'.csv',index=False,header=False)
                 
