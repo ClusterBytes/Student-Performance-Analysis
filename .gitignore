@@ -3,3 +3,5 @@ sklearn_exploring
 Models_Examples
 Datasets
 Data preprocessing/result.csv
+*.csv
+__pycache__
