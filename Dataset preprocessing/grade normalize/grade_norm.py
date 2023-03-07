@@ -37,8 +37,14 @@ for _year in year:
                 perc={}
                 for g in range(2,5):
                     Grade=grade[g]
-                    perc[Grade]=0.5 if y[g-1]==y[g+1] else y[g+1]/(y[g-1]+y[g+1])
-                perc['P']=1.0
+                    
+                    b1=(3*y[g]+y[g+1]-y[g-1])//6
+                    b2=b1+1
+                    a1=y[g]-b1
+                    a2=y[g]-b2
+                    
+                    perc[Grade]=b1 if (b1-a1)-(y[g+1]-y[g-1])<(b2-a2)-(y[g+1]-y[g-1]) else b2
+                perc['P']=y[1]
                 
                 
                 print(y)
@@ -47,7 +53,8 @@ for _year in year:
                 
                 for g in range(1,5):
                     Grade=grade[g]
-                    slice_index=int(y[g]*perc[Grade])
+                    slice_index=int(perc[Grade])
+                    print(Grade,perc[Grade])
                     c_indices=data.loc[data['grade']==Grade].index[:slice_index]
                     data.loc[c_indices,'grade']=new_grade[Grade][0]
                     data.loc[data['grade']==Grade,'grade']=new_grade[Grade][1]
