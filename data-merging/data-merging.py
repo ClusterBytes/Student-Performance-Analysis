@@ -15,7 +15,16 @@ for col in merging_columns:
     columns = list(grouped_df.columns)
     new_cols = [col[0:1] + str(i + 1) for i in range(len(columns))]
     grouped_df.columns = new_cols
+
+    if col == "Subject":
+        grouped_df.fillna(value="NOSUB", inplace=True)
+    if col == "Grade":
+        grouped_df.fillna(value="F", inplace=True)
+    else:
+        grouped_df.fillna(value=0, inplace=True)
+
     final.append(grouped_df)
+
 
 # merge the dept of each student
 year_dept = year_dept_merge(df)
@@ -25,4 +34,5 @@ final.insert(0, year_dept)
 
 # final csv with reg_no,dept,subject,attendance,internal,grade
 df_final = ft.reduce(lambda left, right: pd.merge(left, right, on="Reg_No"), final)
+# print(df_final)
 df_final.to_csv("each_student_row.csv", index=False)
