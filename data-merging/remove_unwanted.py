@@ -16,4 +16,4 @@ for item in removing_items:
 
 print(df)
 
-df.to_csv("removed", index=False)
+df.to_csv("removed.csv", index=False)
