@@ -41,7 +41,18 @@ col_name = transformed_col_name.tolist()
 
 new_col = []
 for col in col_name:
-    column = col.replace('__','_')
+    if('Reg__' in col):
+        column = col.replace('Reg__','')
+    elif('Dept__' in col):
+        column = col.replace('Dept__','')
+    elif('Sub__' in col):
+        column = col.replace('Sub__','')
+    elif('Attendance__' in col):
+        column = col.replace('Attendance__','')
+    elif('Internal__' in col):
+        column = col.replace('Internal__','')
+    else:
+        column = col.replace('Grade__','')
     new_col.append(column)
 
 transformed_data = pd.DataFrame(transformed, columns = new_col)
