@@ -94,8 +94,10 @@ from sklearn.linear_model import Perceptron
 data = pd.read_csv('result.csv', index_col='Reg_No')
 
 # Split the dataset into features and target
-X = data.drop('G1', axis=1)
-y = data['G1']
+X = data.drop('G1',axis=1)
+# y = data['G1']
+y = data.loc[:, 'G1':'G18']
+
 
 # Define the models to be tested
 models = {
@@ -113,8 +115,13 @@ params = {
     'Perceptron': {'alpha': [0.0001, 0.001, 0.01, 0.1]}
 }
 
+
 # Perform grid search for each model
-for name, model in models.items():
-    clf = GridSearchCV(model, params[name], cv=4)
-    clf.fit(X, y)
-    print(f'{name} Best Score: {clf.best_score_} Best Params: {clf.best_params_}')
+for i in range(18):
+    ind = 'G' + str(i+1)
+    for name, model in models.items():
+        clf = GridSearchCV(model, params[name], cv=4)
+        # clf.fit(X, y)
+        clf.fit(X, y.loc[:, ind])
+        
+        print(f'{name} Best Score: {clf.best_score_} Best Params: {clf.best_params_} of {ind}')
