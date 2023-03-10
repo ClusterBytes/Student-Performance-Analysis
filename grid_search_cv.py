@@ -10,16 +10,16 @@ from sklearn.linear_model import Perceptron
 data = pd.read_csv('result.csv', index_col='Reg_No')
 
 # Split the dataset into features and target
-X = data.drop('G1',axis=1)
+X = data.drop(['G1','G2','G3','G4','G5','G6','G7','G8','G9','G10','G11','G12','G13','G14','G15','G16','G17','G18'],axis=1)
 # y = data['G1']
 y = data.loc[:, 'G1':'G18']
 
 
 # Define the models to be tested
 models = {
-    'Decision Tree': DecisionTreeClassifier(),
-    'Random Forest': RandomForestClassifier(),
-    'SVM': SVC(),
+    'Decision Tree': DecisionTreeClassifier(random_state=0),
+    'Random Forest': RandomForestClassifier(random_state=0),
+    'SVM': SVC(random_state=0),
     'Perceptron': Perceptron()
 }
 
