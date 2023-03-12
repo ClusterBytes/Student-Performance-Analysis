@@ -3,17 +3,14 @@ import matplotlib.pyplot as plt
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
+from warnings import filterwarnings
+filterwarnings('ignore')
 
 data = pd.read_csv('D:/Main_Project/Student-Performance-Analysis/Data preprocessing/result.csv', index_col=0)
-print(data)
 
 g = data.columns.get_loc('G1')
-k = data.columns.get_loc('G18')
 x = data.iloc[:,0:g]
-#y = data['G18']
 y = data.loc[:,'G1':'G18']
-print("Training set:\n",x)
-print("Testing set:\n",y)
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size= 0.2, random_state=0)
 
@@ -37,12 +34,9 @@ for i in range(18):
     reg.append(log_reg)
     
     acc = accuracy_score(y_test.loc[:,ind], y_pred)
+    print('The Accuracy of',ind,'is',acc)
     accuracy.append(acc)
     
-for i in range(len(accuracy)):
-    g = 'G'+str(i+1)
-    print("The accuracy of",g,"is",accuracy[i])
-
 u = grade[0:]
 v = accuracy[0:]
 
