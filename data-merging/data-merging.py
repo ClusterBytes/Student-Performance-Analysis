@@ -4,10 +4,14 @@ import functools as ft
 
 from year_dept_merge import year_dept_merge
 
-df = pd.read_csv("1.csv")
-
+df = pd.read_csv("3_grade_normalized.csv")
+print(df["Reg_No"])
 merging_columns = ["Subject", "Attendance", "Internal mark", "Grade"]
 final = []
+gpy = df.groupby("Reg_No")["Subject"].apply(list)
+gp = pd.DataFrame(gpy.values.tolist(), index=gpy.index)
+
+# print(gp)
 # for each student merge the grade,attendance and internal
 for col in merging_columns:
     grouped = df.groupby("Reg_No")[col].apply(list)
