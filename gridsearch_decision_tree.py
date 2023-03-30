@@ -1,5 +1,6 @@
 
 import pandas as pd
+import matplotlib.pyplot as plt
 from sklearn.model_selection import GridSearchCV
 from sklearn.tree import DecisionTreeClassifier
 from warnings import filterwarnings
@@ -26,13 +27,27 @@ params = {
 
 }
 
+grade = []
+accuracy = []
 
 # Perform grid search for each model
 for i in range(18):
     ind = 'G' + str(i+1)
+    grade.append(ind)
     for name, model in models.items():
         clf = GridSearchCV(model, params[name], cv=4)
         # clf.fit(X, y)
         clf.fit(X, y.loc[:, ind])
         
         print(f'{name} Best Score: {clf.best_score_} Best Params: {clf.best_params_} of {ind}')
+        accuracy.append(clf.best_score_)
+
+u = grade[0:]
+v = accuracy[0:]
+
+plt.plot(u,v, scaley=False)
+plt.xlabel('Grade')
+plt.ylabel('Accuracy')
+plt.title('Decision Tree')
+
+plt.show()
