@@ -1,9 +1,8 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.linear_model import LogisticRegression
+from sklearn.naive_bayes import MultinomialNB, GaussianNB, ComplementNB, BernoulliNB, CategoricalNB
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score, precision_score
-import json
+from sklearn.metrics import accuracy_score, confusion_matrix, ConfusionMatrixDisplay, precision_score, recall_score
 from warnings import filterwarnings
 filterwarnings('ignore')
 
@@ -17,37 +16,34 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, test_size= 0.2, random
 
 print("Splitting of x :\n", x_train.shape, x_test.shape)
 print("Splitting of y:\n",y_train.shape, y_test.shape)
-
-with open('logistic_regression_para.json', 'r') as fp:
-    js = json.load(fp)
-
-C = js['C_para']
-penalty = js['penalty_para']
  
-reg = []
+gnb_set = []
 grade = []
 accuracy = []
+
 total_acc = 0
 for i in range(18):
     
     ind = 'G'+str(i+1)
     grade.append(ind)
     
-    log_reg = LogisticRegression(penalty=penalty[i], C=C[i])
+    gnb = ComplementNB()
 
-    log_reg.fit(x_train, y_train.loc[:,ind])
+    gnb.fit(x_train, y_train.loc[:,ind])
+    
+    y_pred = gnb.predict(x_test)
 
-    y_pred = log_reg.predict(x_test)
-
-    reg.append(log_reg)
+    gnb_set.append(gnb)
     
     acc = accuracy_score(y_test.loc[:,ind], y_pred)
     print('The Accuracy of',ind,'is',acc)
+    
     total_acc = total_acc + acc
+
     accuracy.append(acc)
 
 
-print("The average accuracy is",total_acc/18)    
+print("Average accuracy is",total_acc/18)   
 u = grade[0:]
 v = accuracy[0:]
 
@@ -55,6 +51,7 @@ plt.figure(figsize=(10,6))
 plt.plot(u,v, scaley=False)
 plt.xlabel('Grade')
 plt.ylabel('Accuracy')
-plt.title('Logistic Regression')
+plt.title('Naive Bayes')
+
 
 plt.show()
