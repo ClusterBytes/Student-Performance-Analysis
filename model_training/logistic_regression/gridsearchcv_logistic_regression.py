@@ -23,11 +23,16 @@ params = {
 
 # score = []
 # para = []
+score = []
+grade = []
 C_set = []
 penalty_set = []
+total = 0
 for i in range(18):
     
     ind = 'G'+str(i+1)
+
+    grade.append(ind)
     
     log_reg = LogisticRegression()
 
@@ -37,6 +42,9 @@ for i in range(18):
 
     best_para = grid_sch.best_params_
     best_score = grid_sch.best_score_
+
+    score.append(best_score)
+    total = total + best_score
 
     C_set.append(best_para['C'])
     penalty_set.append(best_para['penalty'])
@@ -49,10 +57,26 @@ for i in range(18):
 
 best_para = {
     'C_para': C_set,
-    'penalty_para' : penalty_set
+    'penalty_para' : penalty_set,
+    'score' : score
 }
 
-js = json.dumps(best_para, indent=2)
+js = json.dumps(best_para, indent=3)
 
 with open('logistic_regression_para.json', 'w') as fp:
     fp.write(js)
+
+print("The average accuracy is",total/18)
+
+
+u = grade[0:]
+v = score[0:]
+
+plt.figure(figsize=(10,6))
+plt.plot(u,v, scaley=False)
+plt.xlabel('Grade')
+plt.ylabel('Accuracy')
+plt.title('Logistic Regression')
+
+plt.show()
+
