@@ -99,6 +99,7 @@ for i in add_to:
             data.loc[index,'Internal mark']=n_mark
             data.loc[index,'Grade']=n_grade
             
+            
     count+=1
     print(str(count)+'/'+str(len(add_to)),'Completed :',i)
     
@@ -110,7 +111,8 @@ for i in to_nan:
 print('====  converting subject codes  ====')
 count=0
 for i in new_sub:
-    data.loc[data['Subject']==i]=new_sub[i]
+    index=data.loc[data['Subject']==i].index
+    data.loc[index,'Subject']=new_sub[i]
     count+=1
     print(str(count)+'/'+str(len(new_sub)),'Completed :',i)
 
