@@ -115,7 +115,7 @@ for i in new_sub:
     print(str(count)+'/'+str(len(new_sub)),'Completed :',i)
 
 print('====  dropping unwanted subjects  ====')
-data.dropna()
+data.dropna(inplace=True)
 
 print('writing to ........... 4_subjects_unified.csv')
 data.to_csv('../Dataset/CSV-Single/4_subjects_unified.csv',index=False)
