@@ -25,13 +25,13 @@ for i in range(data.shape[0]):
     grade=data.iloc[i]['Grade']
     
     new_data.loc[reg,'Dept']=dept
-    new_data.loc[reg,sub+'_mark']=mark
-    new_data.loc[reg,sub+'_att']=att
+    new_data.loc[reg,sub+'_mark']=mark/100
+    new_data.loc[reg,sub+'_att']=att/100
     new_data.loc[reg,sub+'_grade']=grade
     
     count+=1
-    if(count%250==0):
+    if(count%750==0 or count==1):
         print(str(count)+'/'+str(data.shape[0]))
 
-
+print(str(count)+'/'+str(data.shape[0]))
 new_data.to_csv('../Dataset/CSV-Single/5_3sub_1stud.csv',index_label='Reg_No')
