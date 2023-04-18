@@ -8,7 +8,9 @@ new_cols=['Dept']
 
 for c in subs:
     new_cols.append(c+'_mark')
+for c in subs:
     new_cols.append(c+'_att')
+for c in subs:
     new_cols.append(c+'_grade')
     
 new_data=pd.DataFrame(index=studs,columns=new_cols)
