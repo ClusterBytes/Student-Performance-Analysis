@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.model_selection import GridSearchCV
 from sklearn.svm import SVC
+import numpy
 from warnings import filterwarnings
 
 filterwarnings("ignore")
@@ -11,10 +12,10 @@ data = pd.read_csv('result.csv', index_col='Reg_No')
 
 # Split the dataset into features and target
 g = data.columns.get_loc('G1')
-k = data.columns.get_loc('G18')
+k = data.columns.get_loc('G42')
 X = data.iloc[:,0:g]
 # y = data['G1']
-y = data.loc[:, 'G1':'G18']
+y = data.loc[:, 'G1':'G42']
 
 
 # Define the models to be tested
@@ -32,7 +33,7 @@ grade = []
 accuracy = []
 
 # Perform grid search for each model
-for i in range(18):
+for i in range(42):
     ind = 'G' + str(i+1)
     grade.append(ind)
     for name, model in models.items():
@@ -43,6 +44,8 @@ for i in range(18):
         print(f'{name} Best Score: {clf.best_score_} Best Params: {clf.best_params_} of {ind}')
         accuracy.append(clf.best_score_)
 
+avg = numpy.average(accuracy)
+print(f"Average accuracy = {avg}")
 u = grade[0:]
 v = accuracy[0:]
 
