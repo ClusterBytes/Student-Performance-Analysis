@@ -46,16 +46,10 @@ sub_list = [
     "PHT110",
 ]
 
-# print(sub_list)
-
-import pandas as pd
-import numpy as np
-import functools as ft
-
-from year_dept_merge import year_dept_merge
+# from year_dept_merge import year_dept_merge
 
 df = pd.read_csv("3_grade_normalized.csv")
-# print(df["Reg_No"])
+
 df_pivot = df.pivot(index=None, columns="Subject", values="Attendance")
 
 df_pivot["Reg_No"] = df["Reg_No"]
@@ -70,16 +64,16 @@ for index, row in df_grouped.iterrows():
         else:
             df_grouped.loc[index, sub] = 1
 sub_columns = df_grouped.columns
-# print(df_grouped)
+
 attendance_col = []
 internal_col = []
 grade_col = []
 
-
-for i in range(1, len(sub_list)):
-    attendance_col.append(f"A{i}")
-    internal_col.append(f"I{i}")
-    grade_col.append(f"G{i}")
+print("length", len(sub_list))
+for s in range(len(sub_list)):
+    attendance_col.append(f"A{s+1}")
+    internal_col.append(f"I{s+1}")
+    grade_col.append(f"G{s+1}")
 final_col = attendance_col + internal_col + grade_col
 
 c_ob = {}
@@ -93,17 +87,21 @@ df_grouped = df_grouped.assign(**c_ob)
 count = 0
 for new_index, new_row in df_grouped.iterrows():
     count += 1
-    print("completed: ", round((count / 2316) * 100, 3), "%")
     print("done:", new_index)
+    print("completed: ", round((count / 2306) * 100, 3), "%")
     for index, row in df.iterrows():
         if row["Reg_No"] == new_index:
-            for i, sub in enumerate(sub_list, start=1):
+            for ind, sub in enumerate(sub_list):
                 if row["Subject"] == sub:
-                    df_grouped.loc[row["Reg_No"], f"A{i}"] = row["Attendance"]
-                    df_grouped.loc[row["Reg_No"], f"I{i}"] = row["Internal mark"]
-                    df_grouped.loc[row["Reg_No"], f"G{i}"] = row["Grade"]
+                    df_grouped.loc[row["Reg_No"], f"A{ind+1}"] = row["Attendance"]
+                    df_grouped.loc[row["Reg_No"], f"I{ind+1}"] = row["Internal mark"]
+                    df_grouped.loc[row["Reg_No"], f"G{ind+1}"] = row["Grade"]
 
-# print(i)
+                if np.isnan(df_grouped.loc[row["Reg_No"], f"A{ind+1}"]):
+                    df_grouped.loc[row["Reg_No"], f"A{ind+1}"] = 0
+                    df_grouped.loc[row["Reg_No"], f"I{ind+1}"] = 0
+                    df_grouped.loc[row["Reg_No"], f"G{ind+1}"] = "F"
 
-
-df_grouped.to_csv("slotting.csv", index=True)
+# df_grouped.loc[:, "A1":"A42"] = df_grouped.loc[:, "A1":"A42"].fillna(0)
+# df_grouped[grade_col].fillna("F", inplace=True)
+df_grouped.to_csv("slotting_with_0.csv", index=True)
