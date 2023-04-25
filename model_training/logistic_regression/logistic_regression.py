@@ -8,11 +8,11 @@ from sklearn.metrics import accuracy_score, confusion_matrix, ConfusionMatrixDis
 from warnings import filterwarnings
 filterwarnings('ignore')
 
-data = pd.read_csv('D:/Main_Project/Student-Performance-Analysis/Data preprocessing/result.csv', index_col=0)
+data = pd.read_csv('D:/Main_Project/Student-Performance-Analysis/Datasets/new_data.csv', index_col=0)
 
-g = data.columns.get_loc('G1')
-x = data.iloc[:,0:g]
-y = data.loc[:,'G1':'G18']
+#g = data.columns.get_loc('A18')
+x = data.loc[:,'Dept_CSE':'I42']
+y = data.loc[:,'G1':'G42']
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size= 0.2, random_state=0)
 
@@ -29,7 +29,7 @@ print("Splitting of y:\n",y_train.shape, y_test.shape)
 grade = []
 accuracy = []
 total_acc = 0
-for i in range(18):
+for i in range(42):
     
     ind = 'G'+str(i+1)
     grade.append(ind)
@@ -49,14 +49,14 @@ for i in range(18):
     total_acc = total_acc + acc
     accuracy.append(acc)
 
-    cm = confusion_matrix(y_test.loc[:, ind], y_pred, labels = model.classes_)
-    disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=model.classes_)
+    # cm = confusion_matrix(y_test.loc[:, ind], y_pred, labels = model.classes_)
+    # disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=model.classes_)
 
 
-    disp.plot()
+    # disp.plot()
 
 
-print("The average accuracy is",total_acc/18)    
+print("The average accuracy is",total_acc/42)    
 u = grade[0:]
 v = accuracy[0:]
 
