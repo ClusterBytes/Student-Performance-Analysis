@@ -9,7 +9,7 @@ from warnings import filterwarnings
 filterwarnings('ignore')
 
 data = pd.read_csv('/home/lince/ClusterBytes/Student-Performance-Analysis/Data preprocessing/result.csv', index_col=0)
-orginal = pd.read_csv('dataset_v2.csv', index_col=0)
+orginal = pd.read_csv('/home/lince/ClusterBytes/Student-Performance-Analysis/core/dataset_v2.csv', index_col=0)
 print(data)
 g = data.columns.get_loc('G1')
 print(g)
