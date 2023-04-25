@@ -4,4 +4,5 @@ Models_Examples
 Datasets
 Data preprocessing/result.csv
 *.csv
+*.csv#
 __pycache__
