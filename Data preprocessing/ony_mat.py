@@ -17,22 +17,22 @@ class DivideByHundred(BaseEstimator, TransformerMixin):
     def get_feature_names_out(self, features=None):
         return features
         
-data = pd.read_csv('dataset_v2.csv')
+data = pd.read_csv('HUN102.csv')
 # data =data.head()
 data.set_index(data['Reg_No'], inplace=True)
 
 onehot_encode = OneHotEncoder(sparse_output=False)
 ordinal_encode_year = OrdinalEncoder()
-ordinal_encode_grade = OrdinalEncoder(categories=[['F', 'P', 'D', 'C', 'C+', 'B', 'B+', 'A', 'A+', 'S']] * 42)
+ordinal_encode_grade = OrdinalEncoder(categories=[['F', 'P', 'D', 'C', 'C+', 'B', 'B+', 'A', 'A+', 'S']])
 scale_attendance = DivideByHundred()
 scale_internal = DivideByHundred()
 
 ct = ColumnTransformer([('Reg','passthrough',['Reg_No']),
                     #    ('Dept', onehot_encode, ['Dept']),
                         # ('Sub', 'passthrough', slice(2,44)),
-                        ('Attendance', scale_attendance, slice(44,86)),
-                        ('Internal', scale_internal, slice(86,128)),
-                        ('Grade', ordinal_encode_grade, slice(128,170))])
+                        ('Attendance', scale_attendance, ['A31']),
+                        ('Internal', scale_internal, ["I31"]),
+                        ('Grade', ordinal_encode_grade, ['G31'])])
 
 transformed=ct.fit_transform(data)
 
@@ -57,4 +57,4 @@ for col in col_name:
 
 transformed_data = pd.DataFrame(transformed, columns = new_col)
 print(transformed_data)
-transformed_data.to_csv("result.csv", index=False)
+transformed_data.to_csv("HUN102_encode.csv", index=False)
