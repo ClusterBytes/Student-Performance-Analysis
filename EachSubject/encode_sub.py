@@ -19,8 +19,10 @@ class DivideByHundred(BaseEstimator, TransformerMixin):
     def get_feature_names_out(self, features=None):
         return features
 
-
-data = pd.read_csv("filtered_"+sys.argv[1] + ".csv")
+if ( sys.argv[3]=="true"):
+    data = pd.read_csv("filtered_"+sys.argv[1] + ".csv")
+else:
+    data = pd.read_csv(sys.argv[1] + ".csv")
 # data =data.head()
 data.set_index(data["Reg_No"], inplace=True)
 print("total rows ",data.shape[0])
