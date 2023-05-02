@@ -3,9 +3,9 @@ import numpy as np
 import functools as ft
 
 
-data = pd.read_csv('dataset_v2.csv')
+data = pd.read_csv('result.csv')
 
-columns_to_keep = ["Reg_No","MA101","A32","I32","G32"]
+columns_to_keep = ["Reg_No","A32","I32","G32"]
 
 new_df = data[columns_to_keep]
 
