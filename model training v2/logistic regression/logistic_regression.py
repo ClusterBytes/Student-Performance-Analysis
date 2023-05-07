@@ -10,13 +10,13 @@ filterwarnings('ignore')
 
 data = pd.read_csv('/home/lince/ClusterBytes/Student-Performance-Analysis/Data preprocessing/result.csv', index_col=0)
 orginal = pd.read_csv('/home/lince/ClusterBytes/Student-Performance-Analysis/core/dataset_v2.csv', index_col=0)
-print(data)
+# print(data)
 g = data.columns.get_loc('G1')
-print(g)
+# print(g)
 x = data.iloc[:,0:g]
-print(x)
+# print(x)
 y = data.loc[:,'G1':'G42']
-print(y)
+# print(y)
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size= 0.2, random_state=48)
 
@@ -71,7 +71,7 @@ for i,sub in enumerate(col_names) :
 
 print("The average accuracy is",total_acc/42)   
 print("The average precision is",total_pre/42)
-
+print(accuracy)
 u = grade[0:]
 v = accuracy[0:]
 
