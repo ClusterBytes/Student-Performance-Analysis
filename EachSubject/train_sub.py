@@ -91,6 +91,7 @@ acc = accuracy_score(y_test, y_pred)
 prec = precision_score(y_test, y_pred, average="weighted")
 print("The Accuracy of " + subject + " is", acc)
 print("The precision of " + subject + " is", prec)
+plot_confusion_matrix(y_test,y_pred,model,subject,"Logistic Regression")
 
 actual_predicted(y_test, y_pred, subject)
 
@@ -142,6 +143,6 @@ for name, model in models.items():
     prec = precision_score(y_test, y_pred, average="weighted")
     print("The Accuracy of " + subject + " is", acc)
     print("The precision of " + subject + " is", prec)
-    plot_confusion_matrix(y_test,y_pred,clf,subject,name)
+    
 
 
