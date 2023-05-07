@@ -5,10 +5,11 @@ from sklearn.model_selection import train_test_split
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix,precision_score, ConfusionMatrixDisplay
 #import json
+import os
 from warnings import filterwarnings
 filterwarnings('ignore')
 
-data = pd.read_csv('/home/lince/ClusterBytes/Student-Performance-Analysis/Data preprocessing/result.csv', index_col=0)
+data = pd.read_csv('/home/lince/ClusterBytes/Student-Performance-Analysis/core/result.csv', index_col=0)
 orginal = pd.read_csv('/home/lince/ClusterBytes/Student-Performance-Analysis/core/dataset_v2.csv', index_col=0)
 # print(data)
 g = data.columns.get_loc('G1')
@@ -32,6 +33,7 @@ print("Splitting of y:\n",y_train.shape, y_test.shape)
 #reg = []
 grade = []
 accuracy = []
+precision=[]
 total_acc = 0
 total_pre=0
 col_names = orginal.iloc[:, 1:43].columns.tolist()
@@ -58,6 +60,7 @@ for i,sub in enumerate(col_names) :
     total_acc = total_acc + acc
     total_pre=total_pre+prec
     accuracy.append(acc)
+    precision.append(prec)
 
 
     cm = confusion_matrix(y_test.loc[:, ind], y_pred, labels = model.classes_)
@@ -66,12 +69,16 @@ for i,sub in enumerate(col_names) :
     fig, ax = plt.subplots(figsize=(8, 8))
     disp.plot(ax=ax)
     ax.set_title(sub+" "+str(round(acc*100,2))+"%")
-    plt.show()
+  
+    plt.savefig(os.path.join('/home/lince/ClusterBytes/Student-Performance-Analysis/plot-for-LR', sub + '.png'))
+    plt.close()
+   
 
 
 print("The average accuracy is",total_acc/42)   
 print("The average precision is",total_pre/42)
-print(accuracy)
+# print(accuracy)
+print(precision)
 u = grade[0:]
 v = accuracy[0:]
 

@@ -17,7 +17,7 @@ class DivideByHundred(BaseEstimator, TransformerMixin):
     def get_feature_names_out(self, features=None):
         return features
         
-data = pd.read_csv('dataset_v2.csv')
+data = pd.read_csv('/home/lince/ClusterBytes/Student-Performance-Analysis/core/dataset_v2.csv')
 # data =data.head()
 data.set_index(data['Reg_No'], inplace=True)
 
