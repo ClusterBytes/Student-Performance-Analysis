@@ -5,6 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, ConfusionMatrixDisplay
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.ensemble import GradientBoostingClassifier
 # import json
 from warnings import filterwarnings
 
@@ -50,6 +51,29 @@ def actual_predicted(y_test, y_pred, subject):
     df["actual_grade"] = df["actual"].apply(lambda x: decode_value(x))
     df["predicted_grade"] = df["predicted"].apply(lambda x: decode_value(x))
     df.to_csv("trained_" + subject + ".csv", index=False)
+def plot_confusion_matrix(y_test,y_pred,model,subject,name):
+    cm = confusion_matrix(y_test, y_pred, labels = model.classes_)
+    disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=model.classes_)
+    fig, ax = plt.subplots(figsize=(8, 8))
+    disp.plot(ax=ax)
+    ax.set_title(name+" "+subject+" "+str(round(acc*100,2))+"%")
+    plt.show()
+
+
+
+
+
+
+clf = GradientBoostingClassifier(max_depth=3, min_samples_split=5)
+clf.fit(x_train, y_train)
+y_pred = clf.predict(x_test)
+acc = accuracy_score(y_test, y_pred)
+print("____________________________________________")
+print("using GradientBoostingClassifier")
+prec = precision_score(y_test, y_pred, average="weighted")
+print("The Accuracy of " + subject + " is", acc)
+print("The precision of " + subject + " is", prec)
+
 
 lda = LinearDiscriminantAnalysis()
 lda.fit(x_train,y_train)
@@ -67,6 +91,7 @@ acc = accuracy_score(y_test, y_pred)
 prec = precision_score(y_test, y_pred, average="weighted")
 print("The Accuracy of " + subject + " is", acc)
 print("The precision of " + subject + " is", prec)
+
 actual_predicted(y_test, y_pred, subject)
 
 
@@ -117,3 +142,6 @@ for name, model in models.items():
     prec = precision_score(y_test, y_pred, average="weighted")
     print("The Accuracy of " + subject + " is", acc)
     print("The precision of " + subject + " is", prec)
+    plot_confusion_matrix(y_test,y_pred,clf,subject,name)
+
+

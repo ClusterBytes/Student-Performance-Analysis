@@ -40,9 +40,9 @@ for i,sub in enumerate(col_names) :
     ind = 'G'+str(i+1)
     grade.append(ind)
     
-    model = LogisticRegression(warm_start=True)
+    log_reg = LogisticRegression()
 
-    # model = OneVsRestClassifier(log_reg)
+    model = OneVsRestClassifier(log_reg)
 
     model.fit(x_train, y_train.loc[:,ind])
 
