@@ -33,6 +33,7 @@ print("Splitting of y:\n",y_train.shape, y_test.shape)
 grade = []
 accuracy = []
 total_acc = 0
+total_pre=0
 col_names = orginal.iloc[:, 1:43].columns.tolist()
 # print(col_names)
 for i,sub in enumerate(col_names) :
@@ -40,9 +41,9 @@ for i,sub in enumerate(col_names) :
     ind = 'G'+str(i+1)
     grade.append(ind)
     
-    model = LogisticRegression(warm_start=True)
+    log_reg = LogisticRegression()
 
-    # model = OneVsRestClassifier(log_reg)
+    model = OneVsRestClassifier(log_reg)
 
     model.fit(x_train, y_train.loc[:,ind])
 
@@ -55,18 +56,22 @@ for i,sub in enumerate(col_names) :
     print('The Accuracy of',sub,'is',acc)
     print('The precision of ',sub,'is',prec)
     total_acc = total_acc + acc
+    total_pre=total_pre+prec
     accuracy.append(acc)
+
 
     cm = confusion_matrix(y_test.loc[:, ind], y_pred, labels = model.classes_)
     disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=model.classes_)
 
-    # fig, ax = plt.subplots(figsize=(8, 8))
-    # disp.plot(ax=ax)
-    # ax.set_title(sub+" "+str(round(acc*100,2))+"%")
-    # plt.show()
+    fig, ax = plt.subplots(figsize=(8, 8))
+    disp.plot(ax=ax)
+    ax.set_title(sub+" "+str(round(acc*100,2))+"%")
+    plt.show()
 
 
-print("The average accuracy is",total_acc/42)    
+print("The average accuracy is",total_acc/42)   
+print("The average precision is",total_pre/42)
+
 u = grade[0:]
 v = accuracy[0:]
 
