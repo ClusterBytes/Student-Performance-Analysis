@@ -1,7 +1,5 @@
-
 import pandas as pd
 import matplotlib.pyplot as plt
-# from sklearn.model_selection import RandomizedSearchCV
 import numpy
 from sklearn.model_selection import GridSearchCV
 from sklearn.ensemble import RandomForestClassifier
@@ -21,36 +19,13 @@ models = {
     'Random Forest': RandomForestClassifier(random_state=0),
     }
 
-# params = {
-#        'Random Forest': {'n_estimators': [10, 50, 100, 150, 200],
-#                      'max_depth': [None, 5, 10, 15, 20],
-#                      'min_samples_split': [2, 5, 10],
-#                      'min_samples_leaf': [1, 2, 4],
-#                         }
-
-# }
-
-# params = {
-#     'Random Forest': {
-#         'n_estimators': [10, 50, 100, 150, 200],
-#         'max_depth': [None, 5, 10, 20],
-#         'min_samples_split': [2, 5, 10],
-#         'min_samples_leaf': [1, 2, 4],
-#         'max_features': ['sqrt', 'log2'],
-#         'bootstrap': [True, False],
-#         'class_weight': ['balanced', None],
-#         'criterion': ['gini', 'entropy'],
-#         'random_state': [0]
-#     }
-# }
 
 params = {
     'Random Forest': {
         'n_estimators': [10, 50, 100,150],
         'max_features': ['sqrt', 'log2'],
         'max_depth': [10, 20, 30, None],
-        # 'min_samples_split': [2, 5, 10],
-        # 'min_samples_leaf': [1, 2, 4]
+        
     }
 }
 
@@ -73,7 +48,7 @@ avg = numpy.average(accuracy)
 print(f"Average accuracy = {avg}")
 u = grade[0:]
 v = accuracy[0:]
-
+print(accuracy)
 plt.plot(u,v, scaley=False)
 plt.xlabel('Grade')
 plt.ylabel('Accuracy')
