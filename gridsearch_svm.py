@@ -12,7 +12,7 @@ data = pd.read_csv('result.csv', index_col='Reg_No')
 
 # Split the dataset into features and target
 g = data.columns.get_loc('G1')
-k = data.columns.get_loc('G42')
+# k = data.columns.get_loc('G42')
 X = data.iloc[:,0:g]
 # y = data['G1']
 y = data.loc[:, 'G1':'G42']
