@@ -4,19 +4,17 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.multiclass import OneVsRestClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix,precision_score, ConfusionMatrixDisplay
-#import json
 import os
 from warnings import filterwarnings
 filterwarnings('ignore')
 
 data = pd.read_csv('/home/lince/ClusterBytes/Student-Performance-Analysis/core/result.csv', index_col=0)
 orginal = pd.read_csv('/home/lince/ClusterBytes/Student-Performance-Analysis/core/dataset_v2.csv', index_col=0)
-# print(data)
+
 g = data.columns.get_loc('G1')
-# print(g)
-x = data.iloc[:,0:g]
-# print(x)
-y = data.loc[:,'G1':'G42']
+x = data.iloc[:,0:g] #features
+
+y = data.loc[:,'G1':'G42'] #labels
 # print(y)
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size= 0.2, random_state=48)
@@ -24,35 +22,27 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, test_size= 0.2, random
 print("Splitting of x :\n", x_train.shape, x_test.shape)
 print("Splitting of y:\n",y_train.shape, y_test.shape)
 
-# with open('logistic_regression_para.json', 'r') as fp:
-#     js = json.load(fp)
-
-# C = js['C_para']
-# penalty = js['penalty_para']
- 
-#reg = []
 grade = []
 accuracy = []
+sub_list=[]
 precision=[]
 total_acc = 0
 total_pre=0
 col_names = orginal.iloc[:, 1:43].columns.tolist()
-# print(col_names)
+
 for i,sub in enumerate(col_names) :
     
     ind = 'G'+str(i+1)
     grade.append(ind)
+    sub_list.append(sub)
     
     log_reg = LogisticRegression()
 
-    model = OneVsRestClassifier(log_reg)
+    model = OneVsRestClassifier(log_reg) #multiclass classification
 
     model.fit(x_train, y_train.loc[:,ind])
-
     y_pred = model.predict(x_test)
-
-    #reg.append(log_reg)
-    
+    # print(y_test.loc[:,ind]) #select only the specific column
     acc = accuracy_score(y_test.loc[:,ind], y_pred)
     prec=precision_score(y_test.loc[:,ind], y_pred,average="weighted")
     print('The Accuracy of',sub,'is',acc)
@@ -78,15 +68,28 @@ for i,sub in enumerate(col_names) :
 print("The average accuracy is",total_acc/42)   
 print("The average precision is",total_pre/42)
 # print(accuracy)
-print(precision)
-u = grade[0:]
+# print(precision)
+u = sub_list[0:]
 v = accuracy[0:]
 
 plt.figure(figsize=(10,6))
 plt.plot(u,v, scaley=False)
-plt.xlabel('Grade')
+plt.xlabel('Subject')
+plt.xticks(rotation=90)
 plt.ylabel('Accuracy')
-plt.title('Logistic Regression')
+plt.title('Logistic Regression - Accuracy Graph')
+
+plt.show()
+
+u = sub_list[0:]
+v = precision[0:]
+
+plt.figure(figsize=(10,6))
+plt.plot(u,v, scaley=False)
+plt.xlabel('Subject')
+plt.xticks(rotation=90)
+plt.ylabel('Precision')
+plt.title('Logistic Regression - Precision Graph')
 
 plt.show()
 
