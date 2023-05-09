@@ -11,7 +11,7 @@ filterwarnings('ignore')
 data = pd.read_csv('D:/Main_Project/Student-Performance-Analysis/Datasets/new_data.csv', index_col=0)
 
 #g = data.columns.get_loc('A18')
-x = data.loc[:,'Dept_CSE':'I42']
+x = data.loc[:,'A1':'I42']
 y = data.loc[:,'G1':'G42']
 
 x_train, x_test, y_train, y_test = train_test_split(x, y, test_size= 0.2, random_state=0)
@@ -34,9 +34,9 @@ for i in range(42):
     ind = 'G'+str(i+1)
     grade.append(ind)
     
-    log_reg = LogisticRegression()
+    model = LogisticRegression()
 
-    model = OneVsRestClassifier(log_reg)
+    #model = OneVsRestClassifier(log_reg)
 
     model.fit(x_train, y_train.loc[:,ind])
 
@@ -49,18 +49,19 @@ for i in range(42):
     total_acc = total_acc + acc
     accuracy.append(acc)
 
-    # cm = confusion_matrix(y_test.loc[:, ind], y_pred, labels = model.classes_)
-    # disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=model.classes_)
+    cm = confusion_matrix(y_test.loc[:, ind], y_pred, labels = model.classes_)
+    disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=model.classes_)
 
 
-    # disp.plot()
+    disp.plot()
+    disp.figure_.savefig('D:/Main_Project/Student-Performance-Analysis/model_training/logistic_regression/LR_images/'+ind+'.png')
 
 
 print("The average accuracy is",total_acc/42)    
 u = grade[0:]
 v = accuracy[0:]
 
-plt.figure(figsize=(10,6))
+plt.figure(figsize=(20,5))
 plt.plot(u,v, scaley=False)
 plt.xlabel('Grade')
 plt.ylabel('Accuracy')
