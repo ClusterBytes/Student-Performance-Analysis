@@ -1,0 +1,56 @@
+BE100		mechanics
+EST100		mechanics
+
+BE10105		intro to computing and problem solving
+BE102		design and engg
+BE103		intro to sust. engg
+
+BE110		graphics
+EST110		graphics
+
+CS100		basics of computer programming
+EST102		C
+
+CS110		CS workshop
+CS120		computer programming lab
+
+CY100		chem
+CYT100		chem
+
+CY110		chem lab
+CYL120		chem lab
+
+EC100		+basics of ECE
+EE100		basics of EEE
+BE10103		intro to EEE
+BE10104		+intro to ECE
+EST130		basics of EEE ECE
+
+EE110		EEE workshop
+EC110		+ECE workshop
+ESL130		ECE EEE workshop
+
+HUN101		life skills
+HUN102		prof comm
+
+MA101		Calculus
+MA102		DE
+MAT101		LA and calculus
+MAT102		vector calcu,DE,transforms
+
+BE10101		intro CE
+CE100		basics of CE
+ME100		+basics of ME
+BE10102		+intro to ME
+EST120		basics of CE ME
+
+CE110		CE Workshop
+ME110		+ME workshop
+ESL120		CE ME workshop
+
+PH100		phy
+PHT100		phy A
+PHT110		phy B
+
+PH110		phy lab
+PHL120		phy lab
